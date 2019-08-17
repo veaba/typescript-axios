@@ -135,3 +135,17 @@ function isBlob(val:any){
   function trim(str:any){
       return (str||'').replace(/^\s*/,'').replace(/\s*$/),''
   }
+
+  /**
+   * @desc 检查是否允许在标准的浏览器上
+   */
+
+   function isStandardBrowserEnv(){
+       if (typeof navigator!=='undefined') && (
+           navigator.product==='ReactNative' ||
+           navigator.product==='NativeScript'||
+           navigator,product==='NS'
+       ) return false
+        
+        return (typeof window !=='undefined' && typeof document!=='undefined')
+    }
