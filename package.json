@@ -1,0 +1,10 @@
+{
+  "version": "0.19.0.types/beta)",
+  "devDependencies": {
+    "@types/follow-redirects": "^1.5.0",
+    "@types/is-buffer": "^2.0.0",
+    "@types/node": "^12.7.2",
+    "follow-redirects": "^1.7.0",
+    "is-buffer": "^2.0.3"
+  }
+}

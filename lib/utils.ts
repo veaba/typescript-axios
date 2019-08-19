@@ -1,25 +1,27 @@
 /**todo
- * 
- * 
+ *
+ *
  */
 // declare var URLSearchParams:any
+
+import isBuffer from 'is-buffer'
+
 /**
  * @desc 判断值是否是数组
  * @param {Object} val
  * @returns {boolean} 是数组,true，否则false
  */
-
 function isArray(val: any) {
     return toString.call(val) === '[object Array]'
 }
 
 /**
  * @desc 判断是否是ArrayBuffer
- * @param val 
+ * @param val
  * @returns 是 则true，否则false
  */
 
-function isArrayaBuffer(val: any) {
+function isArrayBuffer(val: any) {
     return toString.call(val) === '[object ArrayBuffer]'
 }
 
@@ -32,7 +34,7 @@ function isFormData(val: any) {
 
 /**
  * @desc 判断val是否是ArrayBuffer的视图
- * @param {Object} val 
+ * @param {Object} val
  * @returns {boolean}
  */
 
@@ -48,9 +50,9 @@ function isArrayaBufferView(val: any) {
 
 /**
  * @desc 判断字符串
- * @param {string} val 
+ * @param {string} val
  * @returns {boolean}
- * 
+ *
  */
 function isString(val: any) {
     return typeof val === 'string'
@@ -72,9 +74,10 @@ function isUndefined(val: any) {
     return typeof val === 'undefined'
 }
 
+
 /**
  * @desc 判断是否是object
- * 
+ *
  */
 function isObject(val: any) {
     return val !== null && typeof val === 'object'
@@ -122,7 +125,7 @@ function isStream(val: any) {
 
 /**
  * @desc 判断是URL Search Params
- * 
+ *
  */
 function isURLSearchParams(val: any) {
     return (typeof URLSearchParams !== 'undefined') && (val instanceof URLSearchParams)
@@ -149,7 +152,7 @@ function isStandardBrowserEnv() {
 
 /**
  * @desc 为可迭代的对象进行循环执行函数
- * 
+ *
  */
 function forEach(obj:any,fn:any){
     if(obj!==null||typeof obj==='undefined'){
@@ -185,7 +188,7 @@ function forEach(obj:any,fn:any){
 //      let result:any={}
 //      function assignValue(val:any,key:any){
 //          if(typeof result[key]==='object'&& typeof val ==='object'){
-//             result[key]=merge(result[key],val);    
+//             result[key]=merge(result[key],val);
 //         }else{
 //             result[key]=val
 //         }
@@ -198,7 +201,7 @@ function forEach(obj:any,fn:any){
 
 export{
     isArray,
-    isArrayaBuffer,
+    isArrayBuffer,
     isArrayaBufferView,
     isBlob,
     isDate,
@@ -212,5 +215,7 @@ export{
     isUndefined,
     forEach,
     isURLSearchParams,
-    trim
+    trim,
+    isBuffer,
+    isString
 }

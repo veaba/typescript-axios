@@ -4,12 +4,17 @@
  *
  */
 // declare var URLSearchParams:any
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var is_buffer_1 = __importDefault(require("is-buffer"));
+exports.isBuffer = is_buffer_1.default;
 /**
  * @desc 判断值是否是数组
  * @param {Object} val
  * @returns {boolean} 是数组,true，否则false
  */
-Object.defineProperty(exports, "__esModule", { value: true });
 function isArray(val) {
     return toString.call(val) === '[object Array]';
 }
@@ -19,10 +24,10 @@ exports.isArray = isArray;
  * @param val
  * @returns 是 则true，否则false
  */
-function isArrayaBuffer(val) {
+function isArrayBuffer(val) {
     return toString.call(val) === '[object ArrayBuffer]';
 }
-exports.isArrayaBuffer = isArrayaBuffer;
+exports.isArrayBuffer = isArrayBuffer;
 /**
  * @desc 判断是否formData
  */
@@ -55,6 +60,7 @@ exports.isArrayaBufferView = isArrayaBufferView;
 function isString(val) {
     return typeof val === 'string';
 }
+exports.isString = isString;
 /**
  * @desc 判断是数字类型
  * @returns {boolean}
