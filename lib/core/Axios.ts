@@ -3,9 +3,10 @@
  * */
 
 import InterceptorManager from './InterceptorManager'
-import {Config} from '../.d'
+import {Config,Interceptors,Interceptor} from '../.d'
 import mergeConfig from './mergeConfig'
 import buildURL from "../headers/buildURL";
+import dispatchRequest from './dispatchRequest'
 
 /**
  * @desc 创建一个Axios新实例,以es6 class 方式声明
@@ -13,10 +14,9 @@ import buildURL from "../headers/buildURL";
  * */
 
 
-// todo instanceConfig 以interface实现
 class Axios {
     defaults: string;
-    interceptors: object;
+    interceptors: Interceptors;
 
     constructor(instanceConfig: any) {
         this.defaults = instanceConfig;
@@ -28,13 +28,33 @@ class Axios {
 
     // todo
     request(config: Config) {
-        config=mergeConfig(this.defaults,config);
-        return buildURL(config.url,config.params,config.paramsSerializer).replace(/^\?/,'')
+        config = config || {};
+        config = mergeConfig(this.defaults, config);
+        config.method = config.method ? config.method.toLowerCase() : 'get';//默认get
+
+        // 连接拦截器中间件
+        let chain:any= [dispatchRequest,undefined];
+        let promise= Promise.resolve(config);
+
+        // 向第一项添加
+        this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor:Interceptor) {
+            chain.unshift(interceptor.fulfilled,interceptor.rejected)
+        });
+
+        // 向后面添加
+        this.interceptors.response.forEach(function pushResponseInterceptors(interceptor:Interceptor) {
+            chain.push(interceptor.fulfilled,interceptor.rejected)
+        });
+
+        while (chain.length){
+            promise=promise.then(chain.shift(),chain.shift())
+        }
+        return promise
     }
 
-    // todo
     getUri(config: Config) {
-
+        config = mergeConfig(this.defaults, config);
+        return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '')
     }
 
     delete(url: string, config: any) {
