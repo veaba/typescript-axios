@@ -45,10 +45,21 @@ declare namespace Axios{
     }
 
     interface config {
-        // responseType
+        data:string|object,
+        url:string,
+        params:object
+        // responseType,
+        // paramsSerializer
+        timeout:number
+        // withCredentials:boolean
     }
     interface response {
         data:any
+    }
+
+    interface request{
+        // addEventListener
+        // upload
     }
 }
 export default Axios
