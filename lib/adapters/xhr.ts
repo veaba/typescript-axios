@@ -66,7 +66,7 @@ export default function xhrAdapter(config: any) {
             if (request.status === 0 && (request.responseURL && request.responseURL.indexOf('file:') === 0)) return
 
             // 准备响应
-            const responseHeaders = 'getALLResponseHeaders' in request ? parseHeader(request.getALLResponseHeaders()) : null //todo parseHeader
+            const responseHeaders = 'getALLResponseHeaders' in request ? parseHeader(request.getALLResponseHeaders()) : null // parseHeader
             const responseData = !config.responseType || config.responseType === 'text' ? request.responseType : request.response;//??这request 为啥还有一个response
 
             let response = {

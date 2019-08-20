@@ -42,7 +42,7 @@ function xhrAdapter(config) {
             if (request.status === 0 && (request.responseURL && request.responseURL.indexOf('file:') === 0))
                 return;
             // 准备响应
-            var responseHeaders = 'getALLResponseHeaders' in request ? parseHeaders_1.default(request.getALLResponseHeaders()) : null; //todo parseHeader
+            var responseHeaders = 'getALLResponseHeaders' in request ? parseHeaders_1.default(request.getALLResponseHeaders()) : null; // parseHeader
             var responseData = !config.responseType || config.responseType === 'text' ? request.responseType : request.response; //??这request 为啥还有一个response
             var response = {
                 data: responseData,
