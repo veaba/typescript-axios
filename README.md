@@ -6,6 +6,13 @@
 
 本仓库在 Axios [MIT license](https://github.com/axios/axios/blob/master/LICENSE) 下修改、使用、学习
 
+## 了解下TS 的泛型
+
+https://zhongsp.gitbooks.io/typescript-handbook/content/doc/handbook/Enums.html
+
+## axios官方 的接口声明
+> https://github.com/axios/axios/blob/master/index.d.ts
+
 
 ## 特别说明
 
