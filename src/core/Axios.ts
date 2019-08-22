@@ -7,7 +7,8 @@ import {Config,Interceptors,Interceptor} from '../interface'
 import mergeConfig from './mergeConfig'
 import buildURL from "../headers/buildURL";
 import dispatchRequest from './dispatchRequest'
-
+import { throws } from 'assert';
+const pkg = require('../../package.json');
 /**
  * @desc 创建一个Axios新实例,以es6 class 方式声明
  *
@@ -17,16 +18,24 @@ import dispatchRequest from './dispatchRequest'
 class Axios {
     defaults: string;
     interceptors: Interceptors;
-
+    // version:string
     constructor(instanceConfig: any) {
         this.defaults = instanceConfig;
         this.interceptors = {
             request: new InterceptorManager(),
             response: new InterceptorManager()
         }
+        // this.version=package.version
+    }
+    // 保护axios vesion
+    get version(){
+        return pkg.version||''
+    }
+    // 如果尝试去设置，则抛出错误
+    set version(val){
+        throw "Can't setting the Axios version";
     }
 
-    // todo
     request(config: Config) {
         config = config || {};
         config = mergeConfig(this.defaults, config);
@@ -84,7 +93,6 @@ class Axios {
     patch(url: string, data: any, config: any) {
         return this.request({...config, ...{method: 'patch', url, data}})
     }
-
 }
 
 

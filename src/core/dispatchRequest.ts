@@ -10,7 +10,7 @@ import isCancel from '../cancel/isCancel'
 import isAbsoluteURL from '../headers/isAbsoluteURL'
 import combineURLs from '../headers/combineURLs'
 import { forEach } from "../utils";
-import defaults from "../default";
+import defaults from "../defaults";
 
 /**
  * @desc throws 如果请求cancel，则抛出一个cancel
