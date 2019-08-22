@@ -20,7 +20,7 @@ import {
 
 import normalizeHeaderName from './headers/normalizeHeaderName'
 
-import Axios from './.d'
+import {Defaults} from './interface'
 
 const DEFAULT_CONTENT_TYPE = {
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -48,7 +48,7 @@ function getDetaulAdapter() {
 
 
 // 声明defaults 对象
-const defaults: Axios.defaults = {
+const defaults: Defaults = {
     adapter: getDetaulAdapter(),
     // request转换器
     transformRequest: [function transformRequest(data: any, headers: any) {

@@ -22,7 +22,7 @@ import {
     forEach,
     isURLSearchParams,
     trim
-} from '.././utils'
+} from '../utils'
 
 import url from 'url'
 import http from 'http'
@@ -32,7 +32,7 @@ import buildURL from '../headers/buildURL'
 import createError from '../core/createError'
 import enhanceError from '../core/enhanceError'
 import settle from '../core/settle'
-import Axios from '../.d'
+import {Options} from '../interface'
 
 import followRedirects from 'follow-redirects'
 import { setMaxListeners } from 'cluster';
@@ -110,7 +110,7 @@ function httpAdapter(config: any) {
         const agent = isHttpsRequest ? config.httpsAgent : config.httpAgent
 
         // todo 
-        const options: Axios.options = {
+        const options: Options = {
             path: buildURL(parsed.path, config.params, config.paramsSerializer).replace(/^\?/, ''),
             method: config.method.toUpperCase(),
             headers,

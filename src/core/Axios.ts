@@ -3,7 +3,7 @@
  * */
 
 import InterceptorManager from './InterceptorManager'
-import {Config,Interceptors,Interceptor} from '../.d'
+import {Config,Interceptors,Interceptor} from '../interface'
 import mergeConfig from './mergeConfig'
 import buildURL from "../headers/buildURL";
 import dispatchRequest from './dispatchRequest'

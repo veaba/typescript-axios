@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @author Jo.gel
  * @date 2019/8/19 0019
  ***********************/
-var utils_1 = require(".././utils");
+var utils_1 = require("../utils");
 var url_1 = __importDefault(require("url"));
 var http_1 = __importDefault(require("http"));
 var https_1 = __importDefault(require("https"));

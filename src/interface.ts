@@ -20,7 +20,7 @@ export interface AxiosTransformer {
 declare namespace struct {
 }
 
-interface defaults {
+interface Defaults {
     headers?: any
     adapter: () => void
     transformRequest?: AxiosTransformer | AxiosTransformer[]
@@ -32,7 +32,7 @@ interface defaults {
     validateStatus: (status: number) => boolean
 }
 
-interface options {
+interface Options {
     path: string
     method: Methods
     headers: any
@@ -48,11 +48,16 @@ interface options {
 
 interface Config {
     data: string | object,
+    baseURL:string|undefined,
     url: string,
     params: object
     method: string,
+    headers:any,
+    adapter:any,
     responseType: string,
     paramsSerializer: any,
+    transformRequest:any,
+    transfromResponse:any,
     timeout: number
     withCredentials: boolean,
     cancelToken?:{
@@ -60,11 +65,12 @@ interface Config {
     }
 }
 
-interface response {
-    data: any
+interface Response {
+    data: any,
+    headers:any,
 }
 
-interface request {
+interface Request {
     // addEventListener
     // upload
 }
@@ -79,11 +85,11 @@ interface Interceptor {
 }
 
 export {
-    defaults,
-    options,
+    Defaults,
+    Options,
     Config,
-    response,
-    request,
+    Response,
+    Request,
     Interceptors,
     Interceptor
 }

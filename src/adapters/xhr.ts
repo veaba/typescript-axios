@@ -22,7 +22,7 @@ import {
     forEach,
     isURLSearchParams,
     trim
-} from '.././utils'
+} from '../utils'
 import settle from '../core/settle'
 import createError from '../core/createError';
 import buildURL from '../headers/buildURL';
