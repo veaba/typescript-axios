@@ -3,8 +3,6 @@
  * @author Jo.gel
  * @date 2019/8/19 0019
  ***********************/
-// todo 如何简写？
-// todo 重写error 错误的interface
 export default function enhanceError(error: any, config: any, code?: any, request?: any, response?: any,) {
     error.config = config;
     if (code) error.code = code;

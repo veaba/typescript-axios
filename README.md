@@ -18,7 +18,9 @@ https://zhongsp.gitbooks.io/typescript-handbook/content/doc/handbook/Enums.html
 
 有些文件可能在新建时候带有idea 创建者信息，并非说明对该代码有那个啥。
 
-## 异或。axios源码中，大量使用具名函数
+## 疑惑
+
+### axios源码中，大量使用具名函数
 
 具名函数：
 
@@ -53,3 +55,8 @@ console.timeEnd('箭头函数');
 - 具名函数：0.785888671875ms
 - 匿名函数: 0.740966796875ms
 - 箭头函数: 0.459228515625ms
+
+### 暴露 all/spread 干嘛的？
+
+暴露 all/spread 干嘛的？ [src/index.ts:31](src/index.ts )
+

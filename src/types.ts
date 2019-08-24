@@ -1,5 +1,5 @@
 /***********************
- * @desc types 文件 TODO
+ * @desc types 文件
  * @name TS
  * @author Jo.gel
  * @date 2019/8/19 0019

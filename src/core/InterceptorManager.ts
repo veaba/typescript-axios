@@ -5,12 +5,16 @@
  ***********************/
 
 class InterceptorManager  {
-    handlers:any;
+    handlers:any[];
     constructor(){
         this.handlers=[]
     }
     use(fulfilled:any,rejected:any){
-
+        this.handlers.push({
+            fulfilled,
+            rejected
+        });
+        return this.handlers.length-1
     }
     eject(id:any){
 
@@ -18,6 +22,7 @@ class InterceptorManager  {
     forEach(fn:any){
 
     }
+
 }
 export default InterceptorManager
 

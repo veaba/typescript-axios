@@ -16,7 +16,7 @@ export default function mergeConfig(config1:any,config2:any) {
     });
 
     forEach(['headers','auth','proxy'],function mergeDeepProperties(prop:string){
-        // todo 这里使用了解构操作符，需要带验证
+        // TODO 这里使用：解构操作符，需要待验证
         if(isObject(config2[prop])){
             config[prop]={...config1[prop],...config2[prop]}
         }else if(typeof config2[prop]!=='undefined'){

@@ -1,21 +1,15 @@
 import {
-    // isArray,
     isArrayBuffer,
-    isArrayaBufferView,
+    isArrayBufferView,
     isBlob,
     isBuffer,
-    // isDate,
     isFile,
     isFormData,
-    // isFunction,
-    // isNumber,
     isObject,
-    // isStandardBrowserEnv,
     isStream,
     isUndefined,
     forEach,
     isURLSearchParams,
-    // trim
 } from './utils'
 
 import normalizeHeaderName from './headers/normalizeHeaderName'
@@ -34,14 +28,14 @@ function setContentTypeIfUnset(headers: any, value: string) {
 }
 
 // 获取默认的适配器
-function getDetaulAdapter() {
+function getDefaultAdapter() {
     let adapter: any = undefined;
     // 针对node.js
     if (typeof process !== "undefined" && Object.prototype.toString.call(process) === '[object process]') {
-        adapter = () => import('./adapters/http') //todo
+        adapter = () => import('./adapters/http')
     } else if (typeof XMLHttpRequest !== 'undefined') {
         // 针对浏览器使用XHR 适配器
-        adapter = () => import('./adapters/xhr') //todo
+        adapter = () => import('./adapters/xhr')
     }
     return adapter
 }
@@ -49,7 +43,7 @@ function getDetaulAdapter() {
 
 // 声明defaults 对象
 const defaults: Defaults = {
-    adapter: getDetaulAdapter(),
+    adapter: getDefaultAdapter(),
     // request转换器
     transformRequest: [function transformRequest(data: any, headers: any) {
         normalizeHeaderName(headers, 'Accept');
@@ -66,7 +60,7 @@ const defaults: Defaults = {
         }
 
         // 如果是ArrayBufferView
-        if (isArrayaBufferView(data)) return data.buffer;
+        if (isArrayBufferView(data)) return data.buffer;
 
         if (isURLSearchParams(data)) {
             setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
@@ -80,7 +74,7 @@ const defaults: Defaults = {
 
     }],
     // response 转换器
-    transformResponse: [function transformResponse(data: any) {
+    transformResponse: [function transformResponse(data: any):any{
         if (typeof data === 'string') {
             try {
                 data = JSON.parse(data)
@@ -101,7 +95,7 @@ const defaults: Defaults = {
 
     maxContentLength: -1,
 
-    validateStatus: function validateStatus(status: number) {
+    validateStatus: function validateStatus(status: number):boolean {
         return status >= 200 && status < 300
     }
 };
@@ -112,11 +106,11 @@ defaults.headers = {
     }
 };
 
-forEach(['delete', 'get', 'head'], function forEachMethodNoData(method: string) {
+forEach(['delete', 'get', 'head'], function forEachMethodNoData(method: string):void {
     defaults.headers[method] = {}
 });
 
-forEach(['post', 'put', 'patch'], function forEachMethodWithData(method: string) {
+forEach(['post', 'put', 'patch'], function forEachMethodWithData(method: string):void {
     defaults.headers[method] = {...DEFAULT_CONTENT_TYPE}
 });
 export default defaults

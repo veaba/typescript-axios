@@ -1,5 +1,5 @@
 /***********************
- * @process todo
+ * @process
  * @name TS
  * @author Jo.gel
  * @date 2019/8/20 0020
@@ -27,7 +27,7 @@ function throwIfCancellationRequested(config:Config) {
  * @desc 使用配置的适配器将请求分派到服务器。
  * */
 export default function dispatchRequest(config:Config) {
-    throwIfCancellationRequested(config)
+    throwIfCancellationRequested(config);
 
     // 支持baseURL config
     if(config.baseURL&&!isAbsoluteURL(config.url)){
@@ -35,41 +35,41 @@ export default function dispatchRequest(config:Config) {
     }
 
     // 确保headers 存在
-    config.headers=config.headers||{}
+    config.headers=config.headers||{};
 
     // 转换request data
     config.data=transfromData(
         config.data,config.headers,config.transformRequest
-    )
+    );
 
     // 扁平化headers
     config.headers={
         ...config.headers.conmon||{},
         ...config.headers[config.method]||{},
         ...config.headers||{}
-    }
+    };
     // TODO 后期抽离method作为公共变量
     forEach(['delete','get','post','put','patch','common'],(method:string)=>{
         delete config.headers[method]
-    })
+    });
 
-    let adapter= config.adapter||defaults.adapter
+    let adapter= config.adapter||defaults.adapter;
 
     return adapter(config)
     .then((response:any)=>{
-        throwIfCancellationRequested(config)
+        throwIfCancellationRequested(config);
 
         // 转换response Date
         response.data=transfromData(
             response.data,
             response.headers,
             config.transfromResponse
-        )
+        );
         return response
     })
     .catch((reason:any)=>{
         if(!isCancel(reason)){
-            throwIfCancellationRequested(config)
+            throwIfCancellationRequested(config);
 
             // 转换response data
             if(reason&&reason.response){

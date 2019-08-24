@@ -6,7 +6,7 @@
 import {
     isArray,
     isArrayBuffer,
-    isArrayaBufferView,
+    isArrayBufferView,
     isBlob,
     isBuffer,
     isDate,

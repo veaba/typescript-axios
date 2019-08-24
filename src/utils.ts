@@ -1,9 +1,7 @@
-/**todo
- *
+/**
+ *@desc axios 工具类函数
  *
  */
-// declare var URLSearchParams:any
-
 import isBuffer from 'is-buffer'
 
 /**
@@ -11,7 +9,7 @@ import isBuffer from 'is-buffer'
  * @param {Object} val
  * @returns {boolean} 是数组,true，否则false
  */
-function isArray(val: any) {
+function isArray(val: any):boolean {
     return toString.call(val) === '[object Array]'
 }
 
@@ -21,14 +19,14 @@ function isArray(val: any) {
  * @returns 是 则true，否则false
  */
 
-function isArrayBuffer(val: any) {
+function isArrayBuffer(val: any):boolean {
     return toString.call(val) === '[object ArrayBuffer]'
 }
 
 /**
  * @desc 判断是否formData
  */
-function isFormData(val: any) {
+function isFormData(val: any):boolean {
     return (typeof FormData !== 'undefined') && (val instanceof FormData)
 }
 
@@ -38,7 +36,7 @@ function isFormData(val: any) {
  * @returns {boolean}
  */
 
-function isArrayaBufferView(val: any) {
+function isArrayBufferView(val: any):boolean {
     let result: any;
     if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
         result = ArrayBuffer.isView(val);
@@ -54,7 +52,7 @@ function isArrayaBufferView(val: any) {
  * @returns {boolean}
  *
  */
-function isString(val: any) {
+function isString(val: any):boolean {
     return typeof val === 'string'
 }
 
@@ -62,7 +60,7 @@ function isString(val: any) {
  * @desc 判断是数字类型
  * @returns {boolean}
  */
-function isNumber(val: any) {
+function isNumber(val: any):boolean {
     return typeof val === 'number'
 }
 
@@ -70,7 +68,7 @@ function isNumber(val: any) {
  * @desc 判断是undefined类型
  * @returns {boolean}
  */
-function isUndefined(val: any) {
+function isUndefined(val: any):boolean {
     return typeof val === 'undefined'
 }
 
@@ -79,7 +77,7 @@ function isUndefined(val: any) {
  * @desc 判断是否是object
  *
  */
-function isObject(val: any) {
+function isObject(val: any):boolean {
     return val !== null && typeof val === 'object'
 }
 
@@ -87,7 +85,7 @@ function isObject(val: any) {
  * @desc 判断是Date类型
  * @returns {boolean}
  */
-function isDate(val: any) {
+function isDate(val: any):boolean {
     return toString.call(val) === '[object Date]'
 }
 
@@ -95,7 +93,7 @@ function isDate(val: any) {
  * @desc 判断是file 类型
  * @returns {boolean}
  */
-function isFile(val: any) {
+function isFile(val: any):boolean {
     return toString.call(val) === '[object File]'
 }
 
@@ -103,7 +101,7 @@ function isFile(val: any) {
  * @desc 判断是blob类型
  * @returns {boolean}
  */
-function isBlob(val: any) {
+function isBlob(val: any):boolean {
     return toString.call(val) === '[object Blob]'
 }
 
@@ -112,14 +110,14 @@ function isBlob(val: any) {
  * @returns {boolean}
  */
 
-function isFunction(val: any) {
+function isFunction(val: any):boolean {
     return toString.call(val) === '[object Function]'
 }
 
 /**
  * @desc 判断stream
  */
-function isStream(val: any) {
+function isStream(val: any):boolean {
     return isObject(val) && isFunction(val.pipe)
 }
 
@@ -127,7 +125,7 @@ function isStream(val: any) {
  * @desc 判断是URL Search Params
  *
  */
-function isURLSearchParams(val: any) {
+function isURLSearchParams(val: any):boolean {
     return (typeof URLSearchParams !== 'undefined') && (val instanceof URLSearchParams)
 }
 
@@ -135,15 +133,15 @@ function isURLSearchParams(val: any) {
  * @desc 删除开始到结束的多余空白
  */
 
-function trim(str: any) {
-    return (str || '').replace(/^\s*/, '').replace(/\s*$/), ''
+function trim(str: any):string {
+    return (str || '').replace(/^\s*/, '').replace(/\s*$/, '')
 }
 
 /**
  * @desc 检查是否允许在标准的浏览器上
  */
 
-function isStandardBrowserEnv() {
+function isStandardBrowserEnv():boolean {
     if ((typeof navigator !== 'undefined') && (navigator.product === 'ReactNative' || navigator.product === 'NativeScript' || navigator.product === 'NS')) {
         return false
     }
@@ -154,7 +152,7 @@ function isStandardBrowserEnv() {
  * @desc 为可迭代的对象进行循环执行函数
  *
  */
-function forEach(obj:any,fn:any){
+function forEach(obj:any,fn:any):void{
     if(obj!==null||typeof obj==='undefined'){
         return
     }
@@ -202,7 +200,7 @@ function forEach(obj:any,fn:any){
 export{
     isArray,
     isArrayBuffer,
-    isArrayaBufferView,
+    isArrayBufferView,
     isBlob,
     isDate,
     isFile,
