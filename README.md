@@ -60,3 +60,11 @@ console.timeEnd('箭头函数');
 
 暴露 all/spread 干嘛的？ [src/index.ts:31](src/index.ts )
 
+
+## dev
+
+npm install
+
+npm run dev
+
+使用vscode tsc --watch 项目路径

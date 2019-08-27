@@ -1,6 +1,6 @@
-const path = require('path')
+const path = require('path');
 module.exports={
-    entry:'./src/axios.ts',
+    entry:'./src/index.ts',
     mode:"development",
     devtool:'inline-srouce-map',
     module:{
@@ -20,4 +20,4 @@ module.exports={
         filename:"axios_ts.js",
         path:path.resolve(__dirname,'pro')
     }
-}
+};
