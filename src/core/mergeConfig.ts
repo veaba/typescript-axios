@@ -1,6 +1,6 @@
 /***********************
  * @name TS
- * @desc todo 合并config
+ * @desc 合并config
  * @author Jo.gel
  * @date 2019/8/20 0020
  ***********************/
@@ -16,7 +16,7 @@ export default function mergeConfig(config1:any,config2:any) {
     });
 
     forEach(['headers','auth','proxy'],function mergeDeepProperties(prop:string){
-        // TODO 这里使用：解构操作符，需要待验证
+        // test这里使用：解构操作符，需要待验证
         if(isObject(config2[prop])){
             config[prop]={...config1[prop],...config2[prop]}
         }else if(typeof config2[prop]!=='undefined'){

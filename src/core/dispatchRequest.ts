@@ -48,7 +48,7 @@ export default function dispatchRequest(config:Config) {
         ...config.headers[config.method]||{},
         ...config.headers||{}
     };
-    // TODO 后期抽离method作为公共变量
+    // 后期抽离method作为公共变量
     forEach(['delete','get','post','put','patch','common'],(method:string)=>{
         delete config.headers[method]
     });

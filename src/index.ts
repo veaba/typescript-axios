@@ -28,7 +28,7 @@ axios.Cancel = () => import('./cancel/Cancel');
 axios.CancelToken = () => import('./cancel/CancelToken');
 axios.isCancel = () => import('./cancel/isCancel');
 
-// todo 暴露 all/spread 干嘛的？
+// 暴露 all/spread 干嘛的？
 axios.all = (promises: any) => {
 	return Promise.all(promises)
 };

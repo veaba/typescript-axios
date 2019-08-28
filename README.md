@@ -68,3 +68,10 @@ npm install
 npm run dev
 
 使用vscode tsc --watch 项目路径
+
+
+## todo 
+
+- 取消token ,test如果用户配置了这里，似乎在使用setTimeInterval 出现内存过载的问题，以前在开发时候遇到
+- let cookies = require('../headers/cookies') // todo 如何让它改成为import？这个module是一个立即执行函数
+- todo 后续ts输出成为ts，然后用于deno开发试试2019年8月22日10:47:23

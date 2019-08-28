@@ -86,7 +86,7 @@ interface Executor {
     (fn:Function):void
 }
 
-// todo 实现Axios 类的interface
+// 实现Axios 类的interface
 // 参考 https://zhongsp.gitbooks.io/typescript-handbook/content/doc/handbook/Interfaces.html
 
 export {

@@ -34,39 +34,39 @@ import cookies from '../headers/cookies';
 export default function xhrAdapter(config: any) {
     return new Promise((resolve: any, reject: any) => {
         let requestData = config.data;
-        const requestHeaders = config.headers
+        const requestHeaders = config.headers;
 
         if (isFormData(requestData)) {
             delete requestHeaders['Content-Type']; // 让浏览器来设置它
         }
 
-        let request: any = new XMLHttpRequest()
+        let request: any = new XMLHttpRequest();
 
         // HTTP basic 授权
 
         if (config.auth) {
-            const username = config.auth.username || ''
-            const password = config.auth.password || ''
+            const username = config.auth.username || '';
+            const password = config.auth.password || '';
             requestHeaders.Authorization = 'Basic' + btoa(username + ':' + password) //btoa??
         }
-        request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true)
+        request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
 
         // 设置请求超时毫秒
-        request.timeout = config.timeout
+        request.timeout = config.timeout;
 
         // 监听ready 状态
         request.onreadystatechange = () => {
-            if (!request || request.readyState !== 4) return
+            if (!request || request.readyState !== 4) return;
 
 
             // The request errored out and we didn't get a response, this will be
             // handled by onerror instead
             // With one exception: request that using file: protocol, most browsers
             // will return status as 0 even though it's a successful request
-            if (request.status === 0 && (request.responseURL && request.responseURL.indexOf('file:') === 0)) return
+            if (request.status === 0 && (request.responseURL && request.responseURL.indexOf('file:') === 0)) return;
 
             // 准备响应
-            const responseHeaders = 'getALLResponseHeaders' in request ? parseHeader(request.getALLResponseHeaders()) : null // parseHeader
+            const responseHeaders = 'getALLResponseHeaders' in request ? parseHeader(request.getALLResponseHeaders()) : null; // parseHeader
             const responseData = !config.responseType || config.responseType === 'text' ? request.responseType : request.response;//??这request 为啥还有一个response
 
             let response = {
@@ -76,52 +76,52 @@ export default function xhrAdapter(config: any) {
                 headers: responseHeaders,
                 config,
                 request
-            }
+            };
 
-            settle(resolve, reject, response)
+            settle(resolve, reject, response);
 
             // 清理请求
             request = null
-        }
+        };
 
         // 处理浏览器请求取消（与手动取消相反）
         request.onabort = () => {
-            if (!request) return
+            if (!request) return;
 
-            reject(createError('Request aborted', config, 'ECONNABORTED', request))
+            reject(createError('Request aborted', config, 'ECONNABORTED', request));
 
             // 清理請求
             request = null
-        }
+        };
 
         // 处理低级网络错误
         request.onerror = () => {
             // 真正的错误被浏览器隐藏起来
             // OnError只应在网络错误时触发。
-            reject(createError('Network Error', config, null, request))
+            reject(createError('Network Error', config, null, request));
             // 清理請求
             request = null
-        }
+        };
 
         // 处理超时
         request.ontimeout = () => {
-            reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED', request))
+            reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED', request));
             // 清理請求
             request = null
 
-        }
+        };
 
         // 添加 XSRF header
         // 只有在标准浏览器环境中运行时，才能执行此操作。
         // 尤其是如果我们是一个web worker，或者是react-native
         if (isStandardBrowserEnv()) {
-            let cookies = require('../headers/cookies') // todo 如何让它改成为import？这个module是一个立即执行函数
+            let cookies = require('../headers/cookies'); // test如何让它改成为import？这个module是一个立即执行函数
             // import cookies from '../headers/cookies'
 
-            console.log(cookies)
+            // console.log(cookies)
 
             // add xsrf header
-            let xsrfValue = (config.withCredentials || isURLSameOrigin(config.url) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined)
+            let xsrfValue = (config.withCredentials || isURLSameOrigin(config.url) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined);
             if (xsrfValue) {
                 requestHeaders[config.xsrfHeaderName] = xsrfValue
             }
@@ -171,14 +171,14 @@ export default function xhrAdapter(config: any) {
         if(config.cancelToken){
             // 处理注销
             config.cancelToken.promise.then(function onCanceled(cancel:any){
-                if(!request) return
+                if(!request) return;
 
-                request.abort()
-                reject(cancel)
+                request.abort();
+                reject(cancel);
                 request=null
             })
         }
-        if(requestData===undefined) requestData=null
+        if(requestData===undefined) requestData=null;
 
         // 发送request
         request.send(requestData)

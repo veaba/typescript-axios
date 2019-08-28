@@ -18460,7 +18460,7 @@ function httpAdapter(config) {
             }
             // 如果重定向，返回最后一个请求
             var lastRequest = res.req || req;
-            // TODO 使用interface
+            //使用interface
             var response = {
                 status: res.statusCode,
                 statusText: res.statusMessage,
@@ -18511,7 +18511,7 @@ function httpAdapter(config) {
                 reject(createError_1.default('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED', req));
             }, config.timeout);
         }
-        // 取消token todo ，如果用户配置了这里，似乎在使用setTimeInterval 出现内存过载的问题，以前在开发时候遇到
+        // 取消token ,test如果用户配置了这里，似乎在使用setTimeInterval 出现内存过载的问题，以前在开发时候遇到
         if (config.cancelToken) {
             config.cancelToken.promise.then(function (cancel) {
                 if (req.aborted)
@@ -18628,9 +18628,9 @@ function xhrAdapter(config) {
         // 只有在标准浏览器环境中运行时，才能执行此操作。
         // 尤其是如果我们是一个web worker，或者是react-native
         if (utils_1.isStandardBrowserEnv()) {
-            var cookies_1 = __webpack_require__(/*! ../headers/cookies */ "./src/headers/cookies.ts"); // todo 如何让它改成为import？这个module是一个立即执行函数
+            var cookies_1 = __webpack_require__(/*! ../headers/cookies */ "./src/headers/cookies.ts"); // test如何让它改成为import？这个module是一个立即执行函数
             // import cookies from '../headers/cookies'
-            console.log(cookies_1);
+            // console.log(cookies)
             // add xsrf header
             var xsrfValue = (config.withCredentials || isURLSameOrigin_1.default(config.url) && config.xsrfCookieName ? cookies_1.read(config.xsrfCookieName) : undefined);
             if (xsrfValue) {
@@ -18910,12 +18910,13 @@ exports.default = Axios;
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
 /***********************
- * @name TS todo
+ * @desc  拦截器管理器
  * @author Jo.gel
  * @date 2019/8/20 0020
  ***********************/
-Object.defineProperty(exports, "__esModule", { value: true });
+var utils_1 = __webpack_require__(/*! ../utils */ "./src/utils.ts");
 var InterceptorManager = /** @class */ (function () {
     function InterceptorManager() {
         this.handlers = [];
@@ -18927,9 +18928,25 @@ var InterceptorManager = /** @class */ (function () {
         });
         return this.handlers.length - 1;
     };
+    /**
+     * @desc 从堆栈中删除拦截器
+     * @param {Number} id 由`返回的ID使用`
+     * */
     InterceptorManager.prototype.eject = function (id) {
+        if (this.handlers[id])
+            this.handlers[id] = null;
     };
+    /**
+     * 迭代所有注册的拦截器
+     * 这种方法对于跳过
+     * 可能已成为`null`的拦截器调用`eject`。
+     * @param {Function} fn 调用每个拦截器的函数
+     * */
     InterceptorManager.prototype.forEach = function (fn) {
+        utils_1.forEach(this.handlers, function forEachHandler(h) {
+            if (h !== null)
+                fn(h);
+        });
     };
     return InterceptorManager;
 }());
@@ -19028,7 +19045,7 @@ function dispatchRequest(config) {
     config.data = transformData_1.default(config.data, config.headers, config.transformRequest);
     // 扁平化headers
     config.headers = __assign({}, config.headers.conmon || {}, config.headers[config.method] || {}, config.headers || {});
-    // TODO 后期抽离method作为公共变量
+    // 后期抽离method作为公共变量
     utils_1.forEach(['delete', 'get', 'post', 'put', 'patch', 'common'], function (method) {
         delete config.headers[method];
     });
@@ -19126,7 +19143,7 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 /***********************
  * @name TS
- * @desc todo 合并config
+ * @desc 合并config
  * @author Jo.gel
  * @date 2019/8/20 0020
  ***********************/
@@ -19140,7 +19157,7 @@ function mergeConfig(config1, config2) {
         }
     });
     utils_1.forEach(['headers', 'auth', 'proxy'], function mergeDeepProperties(prop) {
-        // TODO 这里使用：解构操作符，需要待验证
+        // test这里使用：解构操作符，需要待验证
         if (utils_1.isObject(config2[prop])) {
             config[prop] = __assign({}, config1[prop], config2[prop]);
         }
@@ -19796,7 +19813,7 @@ axios.create = function (instanceConfig) {
 axios.Cancel = function () { return Promise.resolve().then(function () { return __importStar(__webpack_require__(/*! ./cancel/Cancel */ "./src/cancel/Cancel.ts")); }); };
 axios.CancelToken = function () { return Promise.resolve().then(function () { return __importStar(__webpack_require__(/*! ./cancel/CancelToken */ "./src/cancel/CancelToken.ts")); }); };
 axios.isCancel = function () { return Promise.resolve().then(function () { return __importStar(__webpack_require__(/*! ./cancel/isCancel */ "./src/cancel/isCancel.ts")); }); };
-// todo 暴露 all/spread 干嘛的？
+// 暴露 all/spread 干嘛的？
 axios.all = function (promises) {
     return Promise.all(promises);
 };

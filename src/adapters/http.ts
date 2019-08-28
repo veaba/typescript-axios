@@ -214,7 +214,7 @@ function httpAdapter(config: any) {
             // 如果重定向，返回最后一个请求
             const lastRequest = res.req || req;
 
-            // TODO 使用interface
+            //使用interface
             const response: any = {
                 status: res.statusCode,
                 statusText: res.statusMessage,
@@ -265,7 +265,7 @@ function httpAdapter(config: any) {
                 reject(createError('timeout of '+config.timeout+'ms exceeded',config,'ECONNABORTED',req))
             },config.timeout)
         }
-        // 取消token todo ，如果用户配置了这里，似乎在使用setTimeInterval 出现内存过载的问题，以前在开发时候遇到
+        // 取消token ,test如果用户配置了这里，似乎在使用setTimeInterval 出现内存过载的问题，以前在开发时候遇到
         if(config.cancelToken){
             config.cancelToken.promise.then((cancel:any)=>{
                 if(req.aborted) return;
