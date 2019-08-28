@@ -32,11 +32,22 @@ function getDefaultAdapter() {
     let adapter: any = undefined;
     // 针对node.js
     if (typeof process !== "undefined" && Object.prototype.toString.call(process) === '[object process]') {
+        console.info('is Node js?');
         adapter = () => import('./adapters/http')
     } else if (typeof XMLHttpRequest !== 'undefined') {
+        console.info('is browser');
         // 针对浏览器使用XHR 适配器
         adapter = () => import('./adapters/xhr')
     }
+
+    console.info(typeof process);
+
+    console.info(Object.prototype.toString.call(process) );
+
+    console.info(process);
+
+
+    console.info("获取默认的适配器：",adapter);
     return adapter
 }
 

@@ -75,3 +75,35 @@ npm run dev
 - 取消token ,test如果用户配置了这里，似乎在使用setTimeInterval 出现内存过载的问题，以前在开发时候遇到
 - let cookies = require('../headers/cookies') // todo 如何让它改成为import？这个module是一个立即执行函数
 - todo 后续ts输出成为ts，然后用于deno开发试试2019年8月22日10:47:23
+
+## 为什么process 这样的结构
+
+而且
+Object.prototype.toString.call(process) 
+也不是[object process] 
+而是 [object process]
+```text
+const process=
+{ nextTick: [Function],
+  title: 'browser',
+  browser: true,
+  env: {},
+  argv: [],
+  version: '',
+  versions: {},
+  on: [Function: noop],
+  addListener: [Function: noop],
+  once: [Function: noop],
+  off: [Function: noop],
+  removeListener: [Function: noop],
+  removeAllListeners: [Function: noop],
+  emit: [Function: noop],
+  prependListener: [Function: noop],
+  prependOnceListener: [Function: noop],
+  listeners: [Function],
+  binding: [Function],
+  cwd: [Function],
+  chdir: [Function],
+  umask: [Function] }
+
+```

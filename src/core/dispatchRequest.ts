@@ -53,8 +53,17 @@ export default function dispatchRequest(config:Config) {
         delete config.headers[method]
     });
 
+    console.info("config:",config);
+    console.info("defaults:",defaults);
     let adapter= config.adapter||defaults.adapter;
 
+    // todo bug adapter undefined!!!
+    console.info("adapter:",adapter);
+
+
+    console.info('11\n');
+    console.info(process);
+    console.info('22\n');
     return adapter(config)
     .then((response:any)=>{
         throwIfCancellationRequested(config);

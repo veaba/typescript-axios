@@ -19000,7 +19000,7 @@ exports.default = createError;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(process) {
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -19049,7 +19049,14 @@ function dispatchRequest(config) {
     utils_1.forEach(['delete', 'get', 'post', 'put', 'patch', 'common'], function (method) {
         delete config.headers[method];
     });
+    console.info("config:", config);
+    console.info("defaults:", defaults_1.default);
     var adapter = config.adapter || defaults_1.default.adapter;
+    // todo bug adapter undefined!!!
+    console.info("adapter:", adapter);
+    console.info('11\n');
+    console.info(process);
+    console.info('22\n');
     return adapter(config)
         .then(function (response) {
         throwIfCancellationRequested(config);
@@ -19070,6 +19077,7 @@ function dispatchRequest(config) {
 }
 exports.default = dispatchRequest;
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/_process@0.11.10@process/browser.js */ "./node_modules/_process@0.11.10@process/browser.js")))
 
 /***/ }),
 
@@ -19304,12 +19312,18 @@ function getDefaultAdapter() {
     var adapter = undefined;
     // 针对node.js
     if (typeof process !== "undefined" && Object.prototype.toString.call(process) === '[object process]') {
+        console.info('is Node js?');
         adapter = function () { return Promise.resolve().then(function () { return __importStar(__webpack_require__(/*! ./adapters/http */ "./src/adapters/http.ts")); }); };
     }
     else if (typeof XMLHttpRequest !== 'undefined') {
+        console.info('is browser');
         // 针对浏览器使用XHR 适配器
         adapter = function () { return Promise.resolve().then(function () { return __importStar(__webpack_require__(/*! ./adapters/xhr */ "./src/adapters/xhr.ts")); }); };
     }
+    console.info(typeof process);
+    console.info(Object.prototype.toString.call(process));
+    console.info(process);
+    console.info("获取默认的适配器：", adapter);
     return adapter;
 }
 // 声明defaults 对象
