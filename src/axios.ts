@@ -43,12 +43,12 @@ axios.spread = () => import('./headers/spread');
 const x = axios.create({});
 
 
-x.get('http://baidu.com',{data:{kw:"baidu"}})
+x.get('http://183.131.202.13:8081',{data:{query:{kw:"baidu"}}})
 	.then((x:any)=>{
 		console.info("res:",x);
 	})
 	.catch((err:any)=>{
-		console.info("err:",err);
+		console.info("err-11:",err);
 	});
 export default axios
 

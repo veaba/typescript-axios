@@ -27,7 +27,6 @@ function throwIfCancellationRequested(config:Config) {
  * */
 export default function dispatchRequest(config:Config) {
 
-    console.info("使用配置的适配器将请求分派到服务器。:\n",config);
     throwIfCancellationRequested(config);
 
     // 支持baseURL config
@@ -38,9 +37,6 @@ export default function dispatchRequest(config:Config) {
     // 确保headers 存在
     config.headers=config.headers||{};
 
-    // todo 这里的data 为什么丢失了？？
-
-    console.info("为什么丢失:",config.data);
     // 转换request data
     config.data=transformData(
         config.data,
@@ -74,6 +70,8 @@ export default function dispatchRequest(config:Config) {
             response.headers,
             config.transfromResponse
         );
+
+        console.info('xxxL:',response);
         return response
     })
     .catch((reason:any)=>{

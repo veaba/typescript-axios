@@ -15,6 +15,7 @@ import {
 import normalizeHeaderName from './headers/normalizeHeaderName'
 
 import {Defaults} from './interface'
+import {httpAdapter} from "./adapters/http";
 
 const DEFAULT_CONTENT_TYPE = {
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -28,19 +29,27 @@ function setContentTypeIfUnset(headers: any, value: string) {
 }
 
 // 获取默认的适配器
+// todo 这块地方的require 怎么去简写好点呢？
 function getDefaultAdapter() {
     let adapter: any = undefined;
     // 针对node.js，单某种情况下process 是[object object]
     if (typeof process !== "undefined" && Object.prototype.toString.call(process) === '[object process]') {
-        console.info('is Node js?');
-        adapter = () => import('./adapters/http')
+        console.info('is NodeJs');
+        const {httpAdapter} = require('./adapters/http');
+        adapter = httpAdapter;
+        adapter()
+            .then((x: any) => {
+                console.info("x:",x);
+            })
+            .catch((err: any) => {
+                console.info("err:",err);
+            });
+        console.info('===================');
     } else if (typeof XMLHttpRequest !== 'undefined') {
         console.info('is browser');
         // 针对浏览器使用XHR 适配器
-        adapter = () => import('./adapters/xhr')
-    }else {
-        adapter = () => import('./adapters/http');
-        console.info('无法捕捉到意外的适配器~~~~~');
+        const {xhrAdapter} = require('./adapters/xhr');
+        adapter = xhrAdapter
     }
     return adapter
 }
@@ -54,7 +63,6 @@ const defaults: Defaults = {
         normalizeHeaderName(headers, 'Accept');
         normalizeHeaderName(headers, 'Content-Type');
 
-        console.info('这个DATA:',data);
         // 符合formData ArrayBuffer Stream File Blob 则返回data本体
         if (isFormData(data) ||
             isArrayBuffer(data) ||
@@ -81,9 +89,9 @@ const defaults: Defaults = {
 
     }],
     // response 转换器
-    transformResponse: [function transformResponse(data: any):any{
+    transformResponse: [function transformResponse(data: any): any {
 
-        console.info('响应data：',data);
+        console.info('响应data：', data);
         if (typeof data === 'string') {
             try {
                 data = JSON.parse(data)
@@ -104,7 +112,7 @@ const defaults: Defaults = {
 
     maxContentLength: -1,
 
-    validateStatus: function validateStatus(status: number):boolean {
+    validateStatus: function validateStatus(status: number): boolean {
         return status >= 200 && status < 300
     }
 };
@@ -115,11 +123,11 @@ defaults.headers = {
     }
 };
 
-forEach(['delete', 'get', 'head'], function forEachMethodNoData(method: string):void {
+forEach(['delete', 'get', 'head'], function forEachMethodNoData(method: string): void {
     defaults.headers[method] = {}
 });
 
-forEach(['post', 'put', 'patch'], function forEachMethodWithData(method: string):void {
+forEach(['post', 'put', 'patch'], function forEachMethodWithData(method: string): void {
     defaults.headers[method] = {...DEFAULT_CONTENT_TYPE}
 });
 export default defaults

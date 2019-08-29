@@ -9,6 +9,9 @@ import createError from './createError'
  */
 
 export default function settle(resolve: any, reject: any, response: any) {
+    // console.log("*999:",response)
+    // todo response 没有config！！！
+    console.log("response.config:",response.config)
     const validateStatus = response.config.validateStatus;
     if (validateStatus || validateStatus(response.status)) {
         resolve(response)

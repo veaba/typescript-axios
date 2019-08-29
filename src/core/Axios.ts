@@ -37,10 +37,7 @@ class Axios {
     request(config: Config) {
         config = config || {};
 
-
         config = mergeConfig(this.defaults, config);
-
-        console.info('haha:\n',config);
 
         config.method = config.method ? config.method.toLowerCase() : 'get';//默认get,并转换小写method字段
 
@@ -61,7 +58,6 @@ class Axios {
             chain.push(interceptor.fulfilled,interceptor.rejected)
         });
 
-        console.info("chain:",chain);
         while (chain.length){
             promise=promise.then(chain.shift(),chain.shift())
         }

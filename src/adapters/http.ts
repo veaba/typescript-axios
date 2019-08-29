@@ -20,6 +20,7 @@ import settle from '../core/settle'
 import {Options} from '../interface'
 
 import followRedirects from 'follow-redirects'
+
 const httpFollow = followRedirects.http;
 const httpsFollow = followRedirects.https;
 
@@ -27,9 +28,9 @@ const httpsFollow = followRedirects.https;
 const pkg = require('../../package.json');
 const isHttps = /https:?/;
 
-function httpAdapter(config: any) {
+export const httpAdapter = function httpAdapter(config: any) {
     return new Promise(function dispatchHttpRequest(resolvePromise: any, rejectPromise: any) {
-        let timer: any;
+        let timer: any = undefined;
         let resolve = (value: any) => {
             clearTimeout(timer);
             resolvePromise(value)
@@ -38,7 +39,9 @@ function httpAdapter(config: any) {
             clearTimeout(timer);
             rejectPromise(value)
         };
+
         let data: any = config.data;
+        console.info('44:',data);
         const headers = config.headers;
 
         // 设置 User-Agent 某些服务需要
@@ -64,6 +67,8 @@ function httpAdapter(config: any) {
             // 添加Content-Type header 如果 data 存在
             headers['Content-Length'] = data.length
         }
+
+
 
         // HTTP basic authentication
         let auth: any = undefined;
@@ -167,8 +172,9 @@ function httpAdapter(config: any) {
         let transport: any = undefined;
         const isHttpsProxy = isHttpsRequest && (proxy ? isHttps.test(proxy.protocol) : true);
         if (config.transport) transport = config.transport;
-        else if (config.maxRedirects === 0) transport = isHttpsProxy ? https : http;
-        else {
+        else if (config.maxRedirects === 0) {
+            transport = isHttpsProxy ? https : http;
+        } else {
             if (config.maxRedirects) options.maxRedirects = config.maxRedirects;
             transport = isHttpsProxy ? httpsFollow : httpFollow
         }
@@ -176,9 +182,14 @@ function httpAdapter(config: any) {
             options.maxBodyLength = config.maxContentLength
         }
 
+
+
         // 创建request
         // request,为什么这里入参一个具名函数
         const req = transport.request(options, (res: any) => {
+            // bug todo 这里应该有一个config 的！！！!!
+
+            console.log('====',res.config,'=====')
             if (req.aborted) return;
 
             // 如果需要，透明地解压缩响应主体
@@ -198,6 +209,8 @@ function httpAdapter(config: any) {
             // 如果重定向，返回最后一个请求
             const lastRequest = res.req || req;
 
+
+            console.log('开始在这里丢失了response-config：',res.config)
             //使用interface
             const response: any = {
                 status: res.statusCode,
@@ -208,6 +221,7 @@ function httpAdapter(config: any) {
             };
 
             if (config.responseType === 'stream') {
+                console.info('218:',response.data);
                 response.data = stream;
                 settle(resolve, reject, response)
             } else {
@@ -231,7 +245,9 @@ function httpAdapter(config: any) {
                     if (config.responseType !== 'arraybuffer') {
                         responseData = responseData.toString(config.responseEncoding)
                     }
+
                     response.data = responseData;
+                    console.info('244:',response.data);
                     settle(resolve, reject, response)
                 })
             }
@@ -239,34 +255,32 @@ function httpAdapter(config: any) {
         // 处理错误
         req.on('error', (err: any) => {
             if (req.aborted) return;
+            console.info("处理错误:",err);
             reject(enhanceError(err, config, null, req))
 
         });
+
         // 处理请求超时
-        if(config.timeout){
-            timer=setTimeout(()=>{
+        if (config.timeout) {
+            timer = setTimeout(() => {
                 req.aborted();//终止
-                reject(createError('timeout of '+config.timeout+'ms exceeded',config,'ECONNABORTED',req))
-            },config.timeout)
+                reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED', req))
+            }, config.timeout)
         }
         // 取消token ,test如果用户配置了这里，似乎在使用setTimeInterval 出现内存过载的问题，以前在开发时候遇到
-        if(config.cancelToken){
-            config.cancelToken.promise.then((cancel:any)=>{
-                if(req.aborted) return;
+        if (config.cancelToken) {
+            config.cancelToken.promise.then((cancel: any) => {
+                if (req.aborted) return;
                 req.abort();
                 reject(cancel)
             })
         }
-        // 发送 请求
-        if(isStream(data)){
-            data.on('error',(err:any)=>{
-                reject(enhanceError(err,config,null,req))
+        // 发送请求
+        if (isStream(data)) {
+            data.on('error', (err: any) => {
+                reject(enhanceError(err, config, null, req))
             }).pipe(req)// 看看这个stream 的pipe用法
-        }else req.end(data)
+        } else req.end(data)
 
     })
-}
-
-export default httpAdapter
-
-
+};

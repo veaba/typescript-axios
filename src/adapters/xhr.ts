@@ -15,9 +15,11 @@ import isURLSameOrigin from '../headers/isURLSameOrigin'
 import createError from '../core/createError';
 
 
-export default function xhrAdapter(config: any) {
+export const xhrAdapter = function xhrAdapter(config: any) {
     return new Promise((resolve: any, reject: any) => {
         let requestData = config.data;
+
+        console.info('22:',config);
         const requestHeaders = config.headers;
 
         if (isFormData(requestData)) {
@@ -43,7 +45,7 @@ export default function xhrAdapter(config: any) {
             if (!request || request.readyState !== 4) return;
 
 
-            // The request errored out and we didn't get a response, this will be
+            // The request ored out and we didn't get a response, this will be
             // handled by onerror instead
             // With one exception: request that using file: protocol, most browsers
             // will return status as 0 even though it's a successful request
@@ -167,4 +169,4 @@ export default function xhrAdapter(config: any) {
         // 发送request
         request.send(requestData)
     })
-}
+};
