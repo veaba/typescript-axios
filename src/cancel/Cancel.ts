@@ -5,10 +5,10 @@
  */
 
  class Cancel {
-     message:string
-     __CANCEL__:boolean
+     message:string;
+     __CANCEL__:boolean;
      constructor(message:string) {
-         this.message=message
+         this.message=message;
          this.__CANCEL__=true
      }
      toString(){

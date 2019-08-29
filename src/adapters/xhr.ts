@@ -4,31 +4,15 @@
  * @date 2019/8/19 0019
  ***********************/
 import {
-    isArray,
-    isArrayBuffer,
-    isArrayBufferView,
-    isBlob,
-    isBuffer,
-    isDate,
-    isFile,
     isFormData,
-    isFunction,
-    isNumber,
-    isObject,
     isStandardBrowserEnv,
-    isStream,
-    isString,
-    isUndefined,
     forEach,
-    isURLSearchParams,
-    trim
 } from '../utils'
 import settle from '../core/settle'
-import createError from '../core/createError';
 import buildURL from '../headers/buildURL';
 import parseHeader from '../headers/parseHeaders'
 import isURLSameOrigin from '../headers/isURLSameOrigin'
-import cookies from '../headers/cookies';
+import createError from '../core/createError';
 
 
 export default function xhrAdapter(config: any) {

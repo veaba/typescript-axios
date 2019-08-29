@@ -7,7 +7,7 @@ const ignoreDuplicateOf = [
     'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
     'last-modified', 'location', 'max-forwards', 'proxy-authorization',
     'referer', 'retry-after', 'user-agent'
-]
+];
 
 /**
  *  Parse headers into an object
@@ -21,23 +21,23 @@ const ignoreDuplicateOf = [
  * @returns {object} 把Header解析为对象
  */
 export default (headers: any) => {
-    const parsed:any = {}
-    let key: any = undefined
-    let val: any = undefined
-    let i: any = undefined
+    const parsed:any = {};
+    let key: any = undefined;
+    let val: any = undefined;
+    let i: any = undefined;
 
-    if (!headers) return parsed
+    if (!headers) return parsed;
 
     forEach(headers.split('\n'), function parser(line: string) {
-        i = line.indexOf(':')
-        key = trim(line.substr(0, i)).toLowerCase()
-        val = trim(line.substr(i + 1))
+        i = line.indexOf(':');
+        key = trim(line.substr(0, i)).toLowerCase();
+        val = trim(line.substr(i + 1));
 
         if (key) {
-            if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) return
+            if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) return;
 
             if (key) {
-                if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) return
+                if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) return;
 
                 if (key === 'set-cookie') {
                     parsed[key] = (parsed[key] ? parsed[key] : []).concat([val])
@@ -46,6 +46,6 @@ export default (headers: any) => {
                 }
             }
         }
-    })
+    });
     return parsed
 }

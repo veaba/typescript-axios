@@ -4,24 +4,9 @@
  * @date 2019/8/19 0019
  ***********************/
 import {
-    isArray,
     isArrayBuffer,
-    isArrayBufferView,
-    isBlob,
-    isBuffer,
-    isDate,
-    isFile,
-    isFormData,
-    isFunction,
-    isNumber,
-    isObject,
-    isStandardBrowserEnv,
     isStream,
     isString,
-    isUndefined,
-    forEach,
-    isURLSearchParams,
-    trim
 } from '../utils'
 
 import url from 'url'
@@ -35,7 +20,6 @@ import settle from '../core/settle'
 import {Options} from '../interface'
 
 import followRedirects from 'follow-redirects'
-import { setMaxListeners } from 'cluster';
 const httpFollow = followRedirects.http;
 const httpsFollow = followRedirects.https;
 
