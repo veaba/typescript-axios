@@ -43,8 +43,6 @@ export default function dispatchRequest(config:Config) {
         config.headers,
         config.transformRequest
     );
-
-    console.info("此时的config：",config);
     // 扁平化headers
     config.headers={
         ...config.headers.conmon||{},
@@ -64,7 +62,7 @@ export default function dispatchRequest(config:Config) {
         throwIfCancellationRequested(config);
         // 转换数据是不是出了点问题 TODO
         console.info("response11::",response);
-        // 转换response Date
+        // 转换response Data
         response.data=transformData(
             response.data,
             response.headers,

@@ -31,17 +31,17 @@ const isHttps = /https:?/;
 export const httpAdapter = function httpAdapter(config: any) {
     return new Promise(function dispatchHttpRequest(resolvePromise: any, rejectPromise: any) {
         let timer: any = undefined;
-        let resolve = (value: any) => {
+        const resolve = (value: any) => {
             clearTimeout(timer);
             resolvePromise(value)
         };
-        let reject = (value: any) => {
+        const reject = (value: any) => {
             clearTimeout(timer);
             rejectPromise(value)
         };
 
         let data: any = config.data;
-        console.info('44:',data);
+        console.info('请求的data：',data);
         const headers = config.headers;
 
         // 设置 User-Agent 某些服务需要
@@ -171,11 +171,14 @@ export const httpAdapter = function httpAdapter(config: any) {
 
         let transport: any = undefined;
         const isHttpsProxy = isHttpsRequest && (proxy ? isHttps.test(proxy.protocol) : true);
-        if (config.transport) transport = config.transport;
-        else if (config.maxRedirects === 0) {
+        if (config.transport){
+			transport = config.transport;
+		} else if (config.maxRedirects === 0) {
             transport = isHttpsProxy ? https : http;
         } else {
-            if (config.maxRedirects) options.maxRedirects = config.maxRedirects;
+            if (config.maxRedirects) {
+				options.maxRedirects = config.maxRedirects;
+			}
             transport = isHttpsProxy ? httpsFollow : httpFollow
         }
         if (config.maxContentLength && config.maxContentLength > -1) {
@@ -183,12 +186,14 @@ export const httpAdapter = function httpAdapter(config: any) {
         }
 
 
+		console.log("transport:",transport)
+
 
         // 创建request
         // request,为什么这里入参一个具名函数
         const req = transport.request(options, (res: any) => {
             // bug todo 这里应该有一个config 的！！！!!
-
+            console.log('bug 出现的位置！！！')
             console.log('====',res.config,'=====')
             if (req.aborted) return;
 
