@@ -19000,7 +19000,7 @@ exports.default = createError;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
+
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -19049,14 +19049,10 @@ function dispatchRequest(config) {
     utils_1.forEach(['delete', 'get', 'post', 'put', 'patch', 'common'], function (method) {
         delete config.headers[method];
     });
-    console.info("config:", config);
-    console.info("defaults:", defaults_1.default);
+    // console.info("config:",config);
+    // console.info("defaults:",defaults);
     var adapter = config.adapter || defaults_1.default.adapter;
     // todo bug adapter undefined!!!
-    console.info("adapter:", adapter);
-    console.info('11\n');
-    console.info(process);
-    console.info('22\n');
     return adapter(config)
         .then(function (response) {
         throwIfCancellationRequested(config);
@@ -19077,7 +19073,6 @@ function dispatchRequest(config) {
 }
 exports.default = dispatchRequest;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/_process@0.11.10@process/browser.js */ "./node_modules/_process@0.11.10@process/browser.js")))
 
 /***/ }),
 
@@ -19092,7 +19087,7 @@ exports.default = dispatchRequest;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 /***********************
- * @name TS
+ * @desc 错误增强管理
  * @author Jo.gel
  * @date 2019/8/19 0019
  ***********************/
@@ -19156,6 +19151,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @date 2019/8/20 0020
  ***********************/
 var utils_1 = __webpack_require__(/*! ../utils */ "./src/utils.ts");
+/**
+ * @param config2 config2 合并到config1
+ * @param config1 将config2合并进来
+ * */
 function mergeConfig(config1, config2) {
     config2 = config2 || {};
     var config = {};
@@ -19245,14 +19244,16 @@ exports.default = settle;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 /***********************
- * @name TS
  * @author Jo.gel
  * @date 2019/8/20 0020
  ***********************/
 var utils_1 = __webpack_require__(/*! ../utils */ "./src/utils.ts");
 /**
  * @desc 转换请求或响应的数据
- *
+ * @param data {Object|String} 要转换的数据
+ * @param headers {Array} 请求或响应的头
+ * @param fns {Array|Function}单个函数或函数数组
+ * @returns * 转换后的数据
  * */
 function transformData(data, headers, fns) {
     utils_1.forEach(fns, function transform(fn) {
@@ -19310,7 +19311,7 @@ function setContentTypeIfUnset(headers, value) {
 // 获取默认的适配器
 function getDefaultAdapter() {
     var adapter = undefined;
-    // 针对node.js
+    // 针对node.js，单某种情况下process 是[object object]
     if (typeof process !== "undefined" && Object.prototype.toString.call(process) === '[object process]') {
         console.info('is Node js?');
         adapter = function () { return Promise.resolve().then(function () { return __importStar(__webpack_require__(/*! ./adapters/http */ "./src/adapters/http.ts")); }); };
@@ -19320,10 +19321,11 @@ function getDefaultAdapter() {
         // 针对浏览器使用XHR 适配器
         adapter = function () { return Promise.resolve().then(function () { return __importStar(__webpack_require__(/*! ./adapters/xhr */ "./src/adapters/xhr.ts")); }); };
     }
-    console.info(typeof process);
-    console.info(Object.prototype.toString.call(process));
-    console.info(process);
-    console.info("获取默认的适配器：", adapter);
+    else {
+        // todo
+        adapter = function () { return Promise.resolve().then(function () { return __importStar(__webpack_require__(/*! ./adapters/http */ "./src/adapters/http.ts")); }); };
+        console.info('无法捕捉到意外的适配器~~~~~');
+    }
     return adapter;
 }
 // 声明defaults 对象
@@ -19481,7 +19483,6 @@ exports.default = buildURL;
 Object.defineProperty(exports, "__esModule", { value: true });
 /***********************
  * @desc 通过组合指定的URL创建新的URL
- * @name TS
  * @author Jo.gel
  * @date 2019/8/20 0020
  * @param {string} baseURL
@@ -19489,8 +19490,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @returns {string}
  ***********************/
 exports.default = (function (baseURL, relativeURL) {
-    return relativeURL ?
-        baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL;
+    return relativeURL
+        ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+        : baseURL;
 });
 
 
@@ -19509,7 +19511,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = __webpack_require__(/*! ../utils */ "./src/utils.ts");
 exports.default = (utils_1.isStandardBrowserEnv() ?
     // 标准浏览器envs支持文档.cookie
-    (function standradBroserEnv() {
+    (function standardBrowserEnv() {
         return {
             write: function write(name, value, expires, path, domain, secure) {
                 var cookie = [];
@@ -19538,7 +19540,7 @@ exports.default = (utils_1.isStandardBrowserEnv() ?
         };
     })() :
     // 非标准浏览器env（web workers，react native）缺乏所需的支持。
-    (function nonStandradBroserEnv() {
+    (function nonStandardBrowserEnv() {
         return {
             write: function write() { },
             read: function read() { return null; },
@@ -19559,7 +19561,6 @@ exports.default = (utils_1.isStandardBrowserEnv() ?
 "use strict";
 
 /***********************
- * @name TS
  * @desc 其实 node环境的path.isAbsolute 也是提供了一个方法的
  * @desc 判断是否绝对路径
  * @author Jo.gel
@@ -19568,10 +19569,8 @@ exports.default = (utils_1.isStandardBrowserEnv() ?
  * @returns {boolean}
  ***********************/
 Object.defineProperty(exports, "__esModule", { value: true });
-// export default function  isAbsoluteURL() {
-// }
 exports.default = (function (url) {
-    return /^([a-z][a-z\d\+\-\,]*:)?\/\//i.test(url);
+    return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 });
 
 
@@ -19834,6 +19833,7 @@ axios.all = function (promises) {
 axios.spread = function () { return Promise.resolve().then(function () { return __importStar(__webpack_require__(/*! ./headers/spread */ "./src/headers/spread.ts")); }); };
 /* ******************* demo *********************** */
 var axiosIns = axios.create({});
+console.info(52545);
 // req 拦截器
 axiosIns.interceptors.request.use(function (req) {
     if (!req.url) {
@@ -19859,20 +19859,22 @@ axiosIns.get('http://baidu.com')
     .catch(function (err) {
     console.log('err:', err);
 });
-var mySearch;
-mySearch = function fn(source, subString) {
-    var result = source.search(subString);
-    return result > -1;
-};
-var x;
-x = function (source, subString) {
-    var result = source.search(subString);
-    return result > -1;
-};
-console.log(mySearch);
-// source: string, subString: string
-// let result = source.search(subString)
-// return result > -1
+// interface SearchFnc {
+// 	(source: string, subString: string): boolean
+// }
+// let mySearch: SearchFnc;
+//
+// mySearch = function fn (source: string, subString: string):boolean{
+// 	let result = source.search(subString);
+// 	return result > -1
+// };
+// let x:SearchFnc;
+// x= (source: string, subString: string)=>{
+// let result = source.search(subString);
+//  	return result > -1
+//  };
+//
+// console.log(mySearch);
 exports.default = axios;
 
 

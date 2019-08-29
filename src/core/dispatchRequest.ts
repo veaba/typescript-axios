@@ -1,11 +1,10 @@
 /***********************
  * @process
- * @name TS
  * @author Jo.gel
  * @date 2019/8/20 0020
  ***********************/
 import {Config} from "../interface";
-import transfromData from './transformData'
+import transformData from './transformData'
 import isCancel from '../cancel/isCancel'
 import isAbsoluteURL from '../headers/isAbsoluteURL'
 import combineURLs from '../headers/combineURLs'
@@ -38,7 +37,7 @@ export default function dispatchRequest(config:Config) {
     config.headers=config.headers||{};
 
     // 转换request data
-    config.data=transfromData(
+    config.data=transformData(
         config.data,config.headers,config.transformRequest
     );
 
@@ -52,24 +51,17 @@ export default function dispatchRequest(config:Config) {
     forEach(['delete','get','post','put','patch','common'],(method:string)=>{
         delete config.headers[method]
     });
-
-    console.info("config:",config);
-    console.info("defaults:",defaults);
+    // console.info("config:",config);
+    // console.info("defaults:",defaults);
     let adapter= config.adapter||defaults.adapter;
 
     // todo bug adapter undefined!!!
-    console.info("adapter:",adapter);
-
-
-    console.info('11\n');
-    console.info(process);
-    console.info('22\n');
     return adapter(config)
     .then((response:any)=>{
         throwIfCancellationRequested(config);
 
         // 转换response Date
-        response.data=transfromData(
+        response.data=transformData(
             response.data,
             response.headers,
             config.transfromResponse
@@ -82,7 +74,7 @@ export default function dispatchRequest(config:Config) {
 
             // 转换response data
             if(reason&&reason.response){
-                reason.response.data=transfromData(
+                reason.response.data=transformData(
                     reason.response.data,
                     reason.response.headers,
                     config.transfromResponse

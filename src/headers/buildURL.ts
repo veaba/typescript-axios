@@ -42,11 +42,11 @@ export default function buildURL(url: string, params: any, paramsSerializer: any
                 }
                 parts.push(encode(key) + '=' + encode(v))
             })
-        })
+        });
         serializedParams = parts.join('&')
     }
     if (serializedParams) {
-        const hashMarkIndex = url.indexOf('#')
+        const hashMarkIndex = url.indexOf('#');
         if (hashMarkIndex !== -1) {
             url = url.slice(0, hashMarkIndex)
         }

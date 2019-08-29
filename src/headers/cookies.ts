@@ -3,11 +3,11 @@ export default (
     isStandardBrowserEnv() ?
 
         // 标准浏览器envs支持文档.cookie
-        (function standradBroserEnv() {
+        (function standardBrowserEnv() {
             return {
                 write: function write(name: string, value: string, expires: number, path?: string, domain?: string, secure?: boolean) {
-                    const cookie = []
-                    cookie.push(name + '=' + encodeURIComponent(value))
+                    const cookie = [];
+                    cookie.push(name + '=' + encodeURIComponent(value));
 
                     if(isNumber(expires)){
                         cookie.push('expires='+new Date(expires).toUTCString())// 源码这里是hitoGMTString
@@ -25,7 +25,7 @@ export default (
                     document.cookie=cookie.join('; ')
                 },
                 read:function read(name:string){
-                    const match:any=document.cookie.match(new RegExp('(^|;\\s*)('+name+')=([^;]*)'))
+                    const match:any=document.cookie.match(new RegExp('(^|;\\s*)('+name+')=([^;]*)'));
                     return (match?decodeURIComponent(match[3]):null)
                 },
                 remove:function remove(name:string){
@@ -35,7 +35,7 @@ export default (
         })() :
 
         // 非标准浏览器env（web workers，react native）缺乏所需的支持。
-        (function nonStandradBroserEnv() {
+        (function nonStandardBrowserEnv() {
             return {
                 write: function write() { },
                 read: function read() { return null },

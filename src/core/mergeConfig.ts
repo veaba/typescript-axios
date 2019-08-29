@@ -6,6 +6,10 @@
  ***********************/
 import {forEach, isObject} from "../utils";
 
+/**
+ * @param config2 config2 合并到config1
+ * @param config1 将config2合并进来
+ * */
 export default function mergeConfig(config1:any,config2:any) {
     config2=config2||{};
     const config:any={};

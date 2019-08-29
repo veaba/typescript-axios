@@ -30,7 +30,7 @@ function setContentTypeIfUnset(headers: any, value: string) {
 // 获取默认的适配器
 function getDefaultAdapter() {
     let adapter: any = undefined;
-    // 针对node.js
+    // 针对node.js，单某种情况下process 是[object object]
     if (typeof process !== "undefined" && Object.prototype.toString.call(process) === '[object process]') {
         console.info('is Node js?');
         adapter = () => import('./adapters/http')
@@ -38,16 +38,11 @@ function getDefaultAdapter() {
         console.info('is browser');
         // 针对浏览器使用XHR 适配器
         adapter = () => import('./adapters/xhr')
+    }else {
+        // todo
+        adapter = () => import('./adapters/http');
+        console.info('无法捕捉到意外的适配器~~~~~');
     }
-
-    console.info(typeof process);
-
-    console.info(Object.prototype.toString.call(process) );
-
-    console.info(process);
-
-
-    console.info("获取默认的适配器：",adapter);
     return adapter
 }
 

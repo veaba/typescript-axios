@@ -40,6 +40,7 @@ axios.spread = () => import('./headers/spread');
 /* ******************* demo *********************** */
 const axiosIns: any = axios.create({});
 
+console.info(52545);
 // req 拦截器
 axiosIns.interceptors.request.use((req: any) => {
 	if (!req.url) {
@@ -69,23 +70,20 @@ axiosIns.get('http://baidu.com')
 	});
 
 
-interface SearchFnc {
-	(source: string, subString: string): boolean
-}
-let mySearch: SearchFnc;
-
-mySearch = function fn (source: string, subString: string):boolean{
-	let result = source.search(subString);
-	return result > -1
-};
-let x:SearchFnc;
-x= (source: string, subString: string)=>{
-let result = source.search(subString);
- 	return result > -1
- };
-
-console.log(mySearch);
-// source: string, subString: string
-// let result = source.search(subString)
-// return result > -1
+// interface SearchFnc {
+// 	(source: string, subString: string): boolean
+// }
+// let mySearch: SearchFnc;
+//
+// mySearch = function fn (source: string, subString: string):boolean{
+// 	let result = source.search(subString);
+// 	return result > -1
+// };
+// let x:SearchFnc;
+// x= (source: string, subString: string)=>{
+// let result = source.search(subString);
+//  	return result > -1
+//  };
+//
+// console.log(mySearch);
 export default axios
