@@ -3,6 +3,6 @@
  * @author Jo.gel
  * @date 2019/8/29 0029
  ***********************/
+// import axios from '../pro/axios_ts'
 
-import axios from './axios'
-export default axios
+// console.info(axios);

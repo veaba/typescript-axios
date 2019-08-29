@@ -1,8 +1,9 @@
 const path = require('path');
 module.exports={
-    entry:'./src/index.ts',
+    entry:'./dist/index.js',
+    // target: "node",
     mode:"development",
-    devtool:'inline-srouce-map',
+    // devtool:'inline-source-map',
     module:{
         rules:[
             {
@@ -12,12 +13,16 @@ module.exports={
             }
         ]
     },
+    node:{
+      process:true
+    },
     resolve:{
         extensions:['.tsx','.ts','.js']
     },
     // 后续ts输出成为ts，然后用于deno开发试试2019年8月22日10:47:23
     output:{
-        filename:"axios_ts.js",
+        // filename:"js-export.js",
+        filename:"axios-ts.js",
         path:path.resolve(__dirname,'pro')
     }
 };

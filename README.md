@@ -76,6 +76,9 @@ npm run dev
 - let cookies = require('../headers/cookies') // todo 如何让它改成为import？这个module是一个立即执行函数
 - todo 后续ts输出成为ts，然后用于deno开发试试2019年8月22日10:47:23
 
+- 为什么webpack 打包.ts 文件为什么空白
+
+
 ## 为什么process 这样的结构
 
 而且
@@ -105,5 +108,43 @@ const process=
   cwd: [Function],
   chdir: [Function],
   umask: [Function] }
+
+```
+
+## demo
+```js
+
+
+/* ******************* demo *********************** */
+// const axiosIns: any = axios.create({});
+//
+// console.info(52545);
+// // req 拦截器
+// axiosIns.interceptors.request.use((req: any) => {
+// 	if (!req.url) {
+// 		console.info('请检查，url为空：' + req.url);
+// 	}
+// 	return req;
+// }, (err: any) => {
+// 	return Promise.reject(err.request);
+// });
+// // res 拦截器
+// axiosIns.interceptors.response.use((res: any) => {
+// 	if (res && res.data) {
+// 		return Promise.resolve(res.data);
+// 	}
+// 	return res.data;
+// }, (err: any) => {
+// 	return Promise.resolve(err.response);
+// });
+//
+//
+// axiosIns.get('http://baidu.com')
+// 	.then((res: any) => {
+// 		console.log('res:', res)
+// 	})
+// 	.catch((err: any) => {
+// 		console.log('err:', err)
+// 	});
 
 ```
