@@ -34,19 +34,9 @@ function getDefaultAdapter() {
     let adapter: any = undefined;
     // 针对node.js，单某种情况下process 是[object object]
     if (typeof process !== "undefined" && Object.prototype.toString.call(process) === '[object process]') {
-        console.info('is NodeJs');
         const {httpAdapter} = require('./adapters/http');
         adapter = httpAdapter;
-        adapter()
-            .then((x: any) => {
-                console.info("x:",x);
-            })
-            .catch((err: any) => {
-                console.info("err:",err);
-            });
-        console.info('===================');
     } else if (typeof XMLHttpRequest !== 'undefined') {
-        console.info('is browser');
         // 针对浏览器使用XHR 适配器
         const {xhrAdapter} = require('./adapters/xhr');
         adapter = xhrAdapter

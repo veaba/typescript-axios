@@ -186,15 +186,15 @@ export const httpAdapter = function httpAdapter(config: any) {
         }
 
 
-		console.log("transport:",transport)
+		console.log("transport:",transport);
 
 
         // 创建request
         // request,为什么这里入参一个具名函数
         const req = transport.request(options, (res: any) => {
             // bug todo 这里应该有一个config 的！！！!!
-            console.log('bug 出现的位置！！！')
-            console.log('====',res.config,'=====')
+            console.log('bug 出现的位置！！！');
+            console.log('====',res.config,'=====');
             if (req.aborted) return;
 
             // 如果需要，透明地解压缩响应主体
@@ -215,7 +215,7 @@ export const httpAdapter = function httpAdapter(config: any) {
             const lastRequest = res.req || req;
 
 
-            console.log('开始在这里丢失了response-config：',res.config)
+            console.log('开始在这里丢失了response-config：',res.config);
             //使用interface
             const response: any = {
                 status: res.statusCode,

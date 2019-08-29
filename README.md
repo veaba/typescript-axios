@@ -77,7 +77,7 @@ npm run dev
 - todo 后续ts输出成为ts，然后用于deno开发试试2019年8月22日10:47:23
 
 - 为什么webpack 打包.ts 文件为什么空白
-
+- response 丢失了config！！
 
 ## 为什么process 这样的结构
 
