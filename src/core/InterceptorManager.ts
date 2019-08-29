@@ -6,7 +6,7 @@
 import {forEach} from "../utils";
 
 class InterceptorManager  {
-    handlers:any[];
+    handlers:any=[];
     constructor(){
         this.handlers=[]
     }

@@ -4,6 +4,8 @@
 
 import Axios from './core/Axios'
 import defaults from './defaults'
+import {forEach} from "./utils";
+
 
 /**
  * @desc 创建Axios 实例
@@ -14,13 +16,15 @@ const createInstance = (defaultConfig: any) => {
 };
 
 // 创建要导出的默认实例
-const axios: any = createInstance(defaults);
+const axios: any = new Axios(defaults);
+// const axios: any = createInstance(defaults);
+
 // 暴露类Axios
 axios.Axios = Axios;
 
 // 用于创建新实例的工厂模式函数
-axios.create = (instanceConfig: any) => {
-	return createInstance({ ...axios.defaults, ...instanceConfig || {} })
+axios.create = function create (instanceConfig: any){
+	return new Axios({ ...axios.defaults, ...instanceConfig || {} })
 };
 
 // 暴露 axios 的Cancel & CancelToken
@@ -35,6 +39,17 @@ axios.all = (promises: any) => {
 
 axios.spread = () => import('./headers/spread');
 
+
+const x = axios.create({});
+
+
+x.get('http://baidu.com',{data:{kw:"baidu"}})
+	.then((x:any)=>{
+		console.info("res:",x);
+	})
+	.catch((err:any)=>{
+		console.info("err:",err);
+	});
 export default axios
 
 

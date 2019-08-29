@@ -9,7 +9,7 @@ import {forEach} from "../utils";
  * @param data {Object|String} 要转换的数据
  * @param headers {Array} 请求或响应的头
  * @param fns {Array|Function}单个函数或函数数组
- * @returns * 转换后的数据
+ * @returns * 转换后的数据 todo
  * */
 export default function transformData(data:any,headers:any,fns:any){
     forEach(fns,function transform(fn:any) {

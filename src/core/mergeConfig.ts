@@ -1,5 +1,4 @@
 /***********************
- * @name TS
  * @desc 合并config
  * @author Jo.gel
  * @date 2019/8/20 0020
@@ -10,7 +9,7 @@ import {forEach, isObject} from "../utils";
  * @param config2 config2 合并到config1
  * @param config1 将config2合并进来
  * */
-export default function mergeConfig(config1:any,config2:any) {
+export default function mergeConfig(config1:any={},config2:any={}) {
     config2=config2||{};
     const config:any={};
     forEach(['url','method','params','data'],function valueFromConfig2(prop:string) {
@@ -18,7 +17,6 @@ export default function mergeConfig(config1:any,config2:any) {
             config[prop]=config2[prop]
         }
     });
-
     forEach(['headers','auth','proxy'],function mergeDeepProperties(prop:string){
         // test这里使用：解构操作符，需要待验证
         if(isObject(config2[prop])){

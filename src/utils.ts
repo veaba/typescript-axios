@@ -149,20 +149,28 @@ function isStandardBrowserEnv():boolean {
 }
 
 /**
- * @desc 为可迭代的对象进行循环执行函数
+ * @desc 迭代为每个项调用函数的数组或对象。
+ * 如果“obj”是一个数组，则调用数组回调，传递每个项的值、索引和完整数组。
+ * 如果“obj”是一个对象，则将调用回调来传递每个属性的值、键和完整对象。
+ *
+ * @param obj 要迭代的对象
+ * @param fn 为每个项调用的回调
  *
  */
 function forEach(obj:any,fn:any):void{
-    if(obj!==null||typeof obj==='undefined'){
+    if(obj===null||typeof obj==='undefined'){
         return
     }
+
+    // 强制转换数组，如果不是数组的话
     if(typeof obj!=='object'){
         obj=[obj]
     }
+
     if(isArray(obj)){
         // 迭代数组
-        for(let i=0;i<obj.length;i++){
-            fn.call(null,[obj],i,obj)
+        for(let i=0,l=obj.length;i<l;i++){
+            fn.call(null,obj[i],i,obj)
         }
     }else{
         // 迭代对象key

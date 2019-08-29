@@ -39,7 +39,6 @@ function getDefaultAdapter() {
         // 针对浏览器使用XHR 适配器
         adapter = () => import('./adapters/xhr')
     }else {
-        // todo
         adapter = () => import('./adapters/http');
         console.info('无法捕捉到意外的适配器~~~~~');
     }
@@ -54,6 +53,8 @@ const defaults: Defaults = {
     transformRequest: [function transformRequest(data: any, headers: any) {
         normalizeHeaderName(headers, 'Accept');
         normalizeHeaderName(headers, 'Content-Type');
+
+        console.info('这个DATA:',data);
         // 符合formData ArrayBuffer Stream File Blob 则返回data本体
         if (isFormData(data) ||
             isArrayBuffer(data) ||
@@ -81,6 +82,8 @@ const defaults: Defaults = {
     }],
     // response 转换器
     transformResponse: [function transformResponse(data: any):any{
+
+        console.info('响应data：',data);
         if (typeof data === 'string') {
             try {
                 data = JSON.parse(data)

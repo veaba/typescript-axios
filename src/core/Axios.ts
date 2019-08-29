@@ -18,16 +18,14 @@ const pkg = require('../../package.json');
 class Axios {
     defaults: string;
     interceptors: Interceptors;
-    // version:string
     constructor(instanceConfig: any) {
         this.defaults = instanceConfig;
         this.interceptors = {
             request: new InterceptorManager(),
             response: new InterceptorManager()
         }
-        // this.version=package.version
     }
-    // 保护axios vesion
+    // 保护axios version
     get version(){
         return pkg.version||''
     }
@@ -38,12 +36,20 @@ class Axios {
 
     request(config: Config) {
         config = config || {};
+
+
         config = mergeConfig(this.defaults, config);
-        config.method = config.method ? config.method.toLowerCase() : 'get';//默认get
+
+        console.info('haha:\n',config);
+
+        config.method = config.method ? config.method.toLowerCase() : 'get';//默认get,并转换小写method字段
 
         // 连接拦截器中间件
         let chain:any= [dispatchRequest,undefined];
         let promise= Promise.resolve(config);
+
+
+
 
         // 向第一项添加
         this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor:Interceptor) {
@@ -55,6 +61,7 @@ class Axios {
             chain.push(interceptor.fulfilled,interceptor.rejected)
         });
 
+        console.info("chain:",chain);
         while (chain.length){
             promise=promise.then(chain.shift(),chain.shift())
         }

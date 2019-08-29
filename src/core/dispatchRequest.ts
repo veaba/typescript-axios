@@ -26,6 +26,8 @@ function throwIfCancellationRequested(config:Config) {
  * @desc 使用配置的适配器将请求分派到服务器。
  * */
 export default function dispatchRequest(config:Config) {
+
+    console.info("使用配置的适配器将请求分派到服务器。:\n",config);
     throwIfCancellationRequested(config);
 
     // 支持baseURL config
@@ -36,11 +38,17 @@ export default function dispatchRequest(config:Config) {
     // 确保headers 存在
     config.headers=config.headers||{};
 
+    // todo 这里的data 为什么丢失了？？
+
+    console.info("为什么丢失:",config.data);
     // 转换request data
     config.data=transformData(
-        config.data,config.headers,config.transformRequest
+        config.data,
+        config.headers,
+        config.transformRequest
     );
 
+    console.info("此时的config：",config);
     // 扁平化headers
     config.headers={
         ...config.headers.conmon||{},
@@ -55,11 +63,11 @@ export default function dispatchRequest(config:Config) {
     // console.info("defaults:",defaults);
     let adapter= config.adapter||defaults.adapter;
 
-    // todo bug adapter undefined!!!
     return adapter(config)
     .then((response:any)=>{
         throwIfCancellationRequested(config);
-
+        // 转换数据是不是出了点问题 TODO
+        console.info("response11::",response);
         // 转换response Date
         response.data=transformData(
             response.data,
