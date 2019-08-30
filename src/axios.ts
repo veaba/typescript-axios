@@ -38,17 +38,6 @@ axios.all = (promises: any) => {
 
 axios.spread = () => import('./headers/spread');
 
-
-const x = axios.create({});
-
-// console.log(axios)
-x.get('http://183.131.202.13:8081',{query:{kw:"baidu"}})
-	.then((x:any)=>{
-		console.info("res:",x);
-	})
-	.catch((err:any)=>{
-		console.info("err-11:",err);
-	});
 export default axios
 
 

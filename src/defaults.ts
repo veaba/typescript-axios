@@ -80,8 +80,6 @@ const defaults: Defaults = {
     }],
     // response 转换器
     transformResponse: [function transformResponse(data: any): any {
-
-        console.info('响应data：', data);
         if (typeof data === 'string') {
             try {
                 data = JSON.parse(data)

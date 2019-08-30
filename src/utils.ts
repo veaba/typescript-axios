@@ -182,29 +182,6 @@ function forEach(obj:any,fn:any):void{
     }
 }
 
-/**
- * @desc  合并函数
- * ```js
- *  const result= merge({foo:123},{foo:456})
- *  console.log(result.foo) // 456
- * ```
- */
-
-//  function merge(xx,){
-//      let result:any={}
-//      function assignValue(val:any,key:any){
-//          if(typeof result[key]==='object'&& typeof val ==='object'){
-//             result[key]=merge(result[key],val);
-//         }else{
-//             result[key]=val
-//         }
-//      }
-//      for(let i=0,l=arguments.length;i<l;i++){
-//             forEach(arguments[i],assignValue)
-//      }
-//      return result
-//  }
-
 export{
     isArray,
     isArrayBuffer,

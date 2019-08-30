@@ -9,11 +9,6 @@ import createError from './createError'
  */
 
 export default function settle(resolve: any, reject: any, response: any) {
-    // console.log("*999:",response)
-    // todo response 没有config！！！
-    console.info('======= \n');
-    console.log("response.config 的值:\n",response.config);
-    console.info('======= \n');
     const validateStatus = response.config.validateStatus;
     if (validateStatus || validateStatus(response.status)) {
         resolve(response)

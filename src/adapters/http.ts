@@ -41,7 +41,6 @@ export const httpAdapter = function httpAdapter(config: any) {
         };
 
         let data: any = config.data;
-        console.info('请求的data：',data);
         const headers = config.headers;
 
         // 设置 User-Agent 某些服务需要
@@ -185,16 +184,10 @@ export const httpAdapter = function httpAdapter(config: any) {
             options.maxBodyLength = config.maxContentLength
         }
 
-
-		console.log("transport:",transport);
-
-
         // 创建request
         // request,为什么这里入参一个具名函数
         const req = transport.request(options, (res: any) => {
             // bug todo 这里应该有一个config 的！！！!!
-            console.log('bug 出现的位置！！！');
-            console.log('====',res.config,'=====');
             if (req.aborted) return;
 
             // 如果需要，透明地解压缩响应主体
@@ -213,20 +206,16 @@ export const httpAdapter = function httpAdapter(config: any) {
 
             // 如果重定向，返回最后一个请求
             const lastRequest = res.req || req;
-
-
-            console.log('开始在这里丢失了response-config：',res.config);
             //使用interface
             const response: any = {
                 status: res.statusCode,
                 statusText: res.statusMessage,
                 headers: res.headers,
-                config: res.config,
+                config,
                 request: lastRequest
             };
 
             if (config.responseType === 'stream') {
-                console.info('218:',response.data);
                 response.data = stream;
                 settle(resolve, reject, response)
             } else {
@@ -241,6 +230,7 @@ export const httpAdapter = function httpAdapter(config: any) {
                         reject(createError('maxContentLength size of ' + config.maxContentLength + ' exceeded', config, null, lastRequest))
                     }
                 });
+
                 stream.on('error', (err: any) => {
                     if (req.aborted) return;
                     reject(enhanceError(err, config, null, lastRequest))
@@ -250,9 +240,7 @@ export const httpAdapter = function httpAdapter(config: any) {
                     if (config.responseType !== 'arraybuffer') {
                         responseData = responseData.toString(config.responseEncoding)
                     }
-
                     response.data = responseData;
-                    console.info('244:',response.data);
                     settle(resolve, reject, response)
                 })
             }
@@ -260,7 +248,6 @@ export const httpAdapter = function httpAdapter(config: any) {
         // 处理错误
         req.on('error', (err: any) => {
             if (req.aborted) return;
-            console.info("处理错误:",err);
             reject(enhanceError(err, config, null, req))
 
         });

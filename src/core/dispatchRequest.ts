@@ -53,23 +53,18 @@ export default function dispatchRequest(config:Config) {
     forEach(['delete','get','post','put','patch','common'],(method:string)=>{
         delete config.headers[method]
     });
-    // console.info("config:",config);
-    // console.info("defaults:",defaults);
+
     let adapter= config.adapter||defaults.adapter;
 
     return adapter(config)
     .then((response:any)=>{
         throwIfCancellationRequested(config);
-        // 转换数据是不是出了点问题 TODO
-        console.info("response11::",response);
         // 转换response Data
         response.data=transformData(
             response.data,
             response.headers,
             config.transfromResponse
         );
-
-        console.info('xxxL:',response);
         return response
     })
     .catch((reason:any)=>{

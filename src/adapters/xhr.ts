@@ -19,7 +19,6 @@ export const xhrAdapter = function xhrAdapter(config: any) {
     return new Promise((resolve: any, reject: any) => {
         let requestData = config.data;
 
-        console.info('22:',config);
         const requestHeaders = config.headers;
 
         if (isFormData(requestData)) {
@@ -29,7 +28,6 @@ export const xhrAdapter = function xhrAdapter(config: any) {
         let request: any = new XMLHttpRequest();
 
         // HTTP basic 授权
-
         if (config.auth) {
             const username = config.auth.username || '';
             const password = config.auth.password || '';
@@ -43,7 +41,6 @@ export const xhrAdapter = function xhrAdapter(config: any) {
         // 监听ready 状态
         request.onreadystatechange = () => {
             if (!request || request.readyState !== 4) return;
-
 
             // The request ored out and we didn't get a response, this will be
             // handled by onerror instead
@@ -102,10 +99,6 @@ export const xhrAdapter = function xhrAdapter(config: any) {
         // 尤其是如果我们是一个web worker，或者是react-native
         if (isStandardBrowserEnv()) {
             let cookies = require('../headers/cookies'); // test如何让它改成为import？这个module是一个立即执行函数
-            // import cookies from '../headers/cookies'
-
-            // console.log(cookies)
-
             // add xsrf header
             let xsrfValue = (config.withCredentials || isURLSameOrigin(config.url) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined);
             if (xsrfValue) {
@@ -114,7 +107,6 @@ export const xhrAdapter = function xhrAdapter(config: any) {
         }
 
         // 添加headers 到 request
-
         if('setRequestHeader' in request){
             forEach(requestHeaders,function setRequestHeader(val:string,key:string){
                 if(typeof requestData==='undefined' && key.toLowerCase()==='content-type'){

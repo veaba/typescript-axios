@@ -4,7 +4,8 @@ module.exports={
     // entry:'./test/c-ts.ts',
     entry:'./src/index.ts',
     // entry:'./test/c.js',
-    target: "node",
+    target: "node",//必须注释，否则浏览器无法使用
+    // 默认生产不优化代码下是260k
     mode:"development",
     devtool:'inline-source-map',
     module:{
