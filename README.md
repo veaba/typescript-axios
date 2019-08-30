@@ -75,9 +75,7 @@ npm run dev
 - 取消token ,test如果用户配置了这里，似乎在使用setTimeInterval 出现内存过载的问题，以前在开发时候遇到
 - let cookies = require('../headers/cookies') // todo 如何让它改成为import？这个module是一个立即执行函数
 - todo 后续ts输出成为ts，然后用于deno开发试试2019年8月22日10:47:23
-
 - 为什么webpack 打包.ts 文件为什么空白
-- response 丢失了config！！
 
 ## 为什么process 这样的结构
 
@@ -149,3 +147,50 @@ const process=
 
 ```
 
+## Test [TODO] mocha
+
+https://mochajs.org/  mocha 官方
+
+- mocha 
+
+## Test [TODO] karma
+http://karma-runner.github.io/latest/index.html
+
+## Coverage [TODO] 
+https://coveralls.io/ 测试覆盖率
+
+## 测试指标 [TODO]
+
+- 测试setInterval下  cancelToken
+- 测试多种data 的结果，以纠正用户输入的正常参数
+- get 测试
+- post 测试
+- head 测试
+- options 测试
+- put 测试
+- patch 测试
+- copy
+- link
+- unlink
+- purge
+- lock
+- unlock
+- propfind
+- view
+- common 测试
+- form-data 测试
+- file 测试
+-  cancel 测试
+- x-www-form-urlencoded
+- raw
+- binary
+- graphQL
+
+
+## 优化指标 [TODO]
+
+- （异步函数去写axios）会不会更快呢？
+
+## deno化 [TODO]
+
+## 去看看graphQL 和普通的xhr 有什么区别
