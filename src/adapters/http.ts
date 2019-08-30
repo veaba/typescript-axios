@@ -28,7 +28,7 @@ const httpsFollow = followRedirects.https;
 const pkg = require('../../package.json');
 const isHttps = /https:?/;
 
-export const httpAdapter = function httpAdapter(config: any) {
+export function httpAdapter(config: any) {
     return new Promise(function dispatchHttpRequest(resolvePromise: any, rejectPromise: any) {
         let timer: any = undefined;
         const resolve = (value: any) => {
@@ -187,7 +187,6 @@ export const httpAdapter = function httpAdapter(config: any) {
         // 创建request
         // request,为什么这里入参一个具名函数
         const req = transport.request(options, (res: any) => {
-            // bug todo 这里应该有一个config 的！！！!!
             if (req.aborted) return;
 
             // 如果需要，透明地解压缩响应主体

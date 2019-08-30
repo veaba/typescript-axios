@@ -29,7 +29,6 @@ function setContentTypeIfUnset(headers: any, value: string) {
 }
 
 // 获取默认的适配器
-// todo 这块地方的require 怎么去简写好点呢？
 function getDefaultAdapter() {
     let adapter: any = undefined;
     // 针对node.js，单某种情况下process 是[object object]
